@@ -6,7 +6,6 @@ import { HttpException } from "@/exceptions/HttpException";
 import { IUserId } from "@/interfaces/userid.interface";
 import userIdModel from "@/models/userid.model";
 import minerConfigModel from "@/models/minerconfig.model";
-import { logger } from "@/utils/logger";
 
 export default class MinerConfigService {
   public async createMinerConfig(
@@ -20,24 +19,14 @@ export default class MinerConfigService {
     if (!userId) throw new HttpException(400, "Invalid user id");
     if (
       !(await minerConfigModel.findOne({
-        $and: [
-          {
-            userID: minerConfigData.userId,
-          },
-          {
-            minerConfig: minerConfigData.minerConfig.trim(),
-          },
-        ],
+        userId: minerConfigData.userId,
+        minerConfig: minerConfigData.minerConfig.trim(),
       }))
     ) {
       return await minerConfigModel.create({
         userId: minerConfigData.userId,
         minerConfig: minerConfigData.minerConfig.trim(),
       });
-    } else {
-      logger.info(
-        `minerconfig not address ${minerConfigData.userId} ${minerConfigData.minerConfig}`,
-      );
     }
   }
 }

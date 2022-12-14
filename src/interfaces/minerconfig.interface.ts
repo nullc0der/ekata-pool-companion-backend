@@ -1,4 +1,4 @@
 export interface IMinerConfig {
-  userID: string;
+  userId: string;
   minerConfig: string;
 }
