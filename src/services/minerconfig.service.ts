@@ -20,8 +20,14 @@ export default class MinerConfigService {
     if (!userId) throw new HttpException(400, "Invalid user id");
     if (
       !(await minerConfigModel.findOne({
-        userID: minerConfigData.userId,
-        minerConfig: minerConfigData.minerConfig.trim(),
+        $and: [
+          {
+            userID: minerConfigData.userId,
+          },
+          {
+            minerConfig: minerConfigData.minerConfig.trim(),
+          },
+        ],
       }))
     ) {
       return await minerConfigModel.create({
