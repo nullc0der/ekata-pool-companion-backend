@@ -5,8 +5,16 @@ import express from "express";
 import helmet from "helmet";
 import hpp from "hpp";
 import morgan from "morgan";
+import * as Sentry from "@sentry/node";
 import { connect, set } from "mongoose";
-import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from "@config";
+import {
+  NODE_ENV,
+  PORT,
+  LOG_FORMAT,
+  ORIGIN,
+  CREDENTIALS,
+  SENTRY_DSN,
+} from "@config";
 import { dbConnection } from "@databases";
 import { Routes } from "@interfaces/routes.interface";
 import errorMiddleware from "@middlewares/error.middleware";
@@ -22,6 +30,9 @@ class App {
     this.env = NODE_ENV || "development";
     this.port = PORT || 3000;
 
+    if (NODE_ENV === "production") {
+      this.initializeSentry();
+    }
     this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
@@ -41,6 +52,10 @@ class App {
     return this.app;
   }
 
+  private initializeSentry() {
+    Sentry.init({ dsn: SENTRY_DSN });
+  }
+
   private connectToDatabase() {
     if (this.env !== "production") {
       set("debug", true);
@@ -50,6 +65,9 @@ class App {
   }
 
   private initializeMiddlewares() {
+    if (NODE_ENV === "production") {
+      this.app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
+    }
     this.app.use(morgan(LOG_FORMAT, { stream }));
     this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
     this.app.use(hpp());
@@ -67,6 +85,11 @@ class App {
   }
 
   private initializeErrorHandling() {
+    if (NODE_ENV === "production") {
+      this.app.use(
+        Sentry.Handlers.errorHandler() as express.ErrorRequestHandler,
+      );
+    }
     this.app.use(errorMiddleware);
   }
 }

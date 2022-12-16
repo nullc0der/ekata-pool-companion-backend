@@ -12,4 +12,5 @@ export const {
   LOG_FORMAT,
   LOG_DIR,
   ORIGIN,
+  SENTRY_DSN,
 } = process.env;
