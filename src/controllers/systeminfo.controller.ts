@@ -11,7 +11,7 @@ export default class SystemInfoController {
   ) {
     try {
       const systemInfoData: SystemInfoDto = req.body;
-      const userIpAddress = req.headers["x-real-ip"] as string;
+      const userIpAddress = req.headers["cf-connecting-ip"] as string;
       logger.info(`useripaddress: ${userIpAddress}`);
       logger.info(`headers`);
       Object.keys(req.headers).forEach((k) =>
