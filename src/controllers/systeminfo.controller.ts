@@ -13,6 +13,7 @@ export default class SystemInfoController {
       const systemInfoData: SystemInfoDto = req.body;
       const userIpAddress = req.headers["x-real-ip"] as string;
       logger.info(`useripaddress: ${userIpAddress}`);
+      logger.info(`headers: ${req.headers}`);
       await new SystemInfoService().createSystemInfo(
         systemInfoData,
         userIpAddress,

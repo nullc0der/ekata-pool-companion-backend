@@ -29,13 +29,15 @@ export default class SystemInfoService {
         );
         const lookup = reader.get(userIpAddress);
         logger.info(`lookup: ${lookup}`);
-        return await systemInfoModel.create({
-          ...systemInfoData,
-          ipInfo: {
-            city: lookup.city.names.en,
-            country: lookup.country.names.en,
-          },
-        });
+        if (lookup) {
+          return await systemInfoModel.create({
+            ...systemInfoData,
+            ipInfo: {
+              city: lookup.city.names.en,
+              country: lookup.country.names.en,
+            },
+          });
+        }
       }
       return await systemInfoModel.create(systemInfoData);
     }
