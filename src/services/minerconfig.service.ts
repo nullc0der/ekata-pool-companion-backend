@@ -17,13 +17,6 @@ export default class MinerConfigService {
       userId: minerConfigData.userId,
     });
     if (!userId) throw new HttpException(400, "Invalid user id");
-    try {
-      JSON.parse(minerConfigData.minerConfig.trim());
-    } catch (error) {
-      if (error instanceof SyntaxError) {
-        throw new HttpException(400, "Bad minerconfig data");
-      }
-    }
     const minerConfig = JSON.parse(minerConfigData.minerConfig.trim());
     if (
       !(await minerConfigModel.findOne({

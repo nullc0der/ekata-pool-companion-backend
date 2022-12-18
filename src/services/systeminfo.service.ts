@@ -1,5 +1,4 @@
 import { isEmpty } from "lodash";
-import geolite2, { GeoIpDbName } from "geolite2-redist";
 import maxmind, { CityResponse } from "maxmind";
 import SystemInfoDto from "@/dtos/systeminfo.dto";
 import { HttpException } from "@/exceptions/HttpException";
@@ -22,8 +21,10 @@ export default class SystemInfoService {
     if (!userId) throw new HttpException(400, "Invalid user id");
     if (!(await systemInfoModel.findOne({ userId: systemInfoData.userId }))) {
       if (NODE_ENV === "production" && userIpAddress) {
-        const reader = await geolite2.open(GeoIpDbName.City, (path) =>
-          maxmind.open<CityResponse>(path),
+        const baseDir = __dirname.split("/");
+        baseDir.pop();
+        const reader = await maxmind.open<CityResponse>(
+          `${baseDir.join("/")}/geoip2/GeoLite2-City.mmdb`,
         );
         const lookup = reader.get(userIpAddress);
         return await systemInfoModel.create({

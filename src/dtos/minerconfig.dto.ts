@@ -1,10 +1,9 @@
-import { IsString } from "class-validator";
+import { IsJSON, IsString } from "class-validator";
 
 export default class MinerConfigDto {
   @IsString()
   public userId: string;
 
-  // TODO: this can be a JSON validation
-  @IsString()
+  @IsJSON()
   public minerConfig: string;
 }
