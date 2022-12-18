@@ -25,7 +25,7 @@ export interface ISystemInfo {
   platform: string;
   userId: string;
   osInfo?: IOsInfo;
-  cpuInfo?: ICpuInfo[];
+  cpuInfos?: ICpuInfo[];
   gpuInfo?: IGpuInfo;
   totalPhysicalMemory?: string;
   ipInfo?: IIpInfo;

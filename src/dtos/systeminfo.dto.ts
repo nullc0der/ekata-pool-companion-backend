@@ -1,6 +1,9 @@
 import { Type } from "class-transformer";
 import { IsOptional, IsString, ValidateNested } from "class-validator";
 
+// TODO: More can be added to osinfo such as kernel name, arch etc
+// and GpuInfo is not uploaded because of changes needed in frontend
+
 class OsInfo {
   @IsOptional()
   @IsString()

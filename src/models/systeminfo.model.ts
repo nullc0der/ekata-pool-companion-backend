@@ -34,7 +34,7 @@ const systemInfoSchema = new Schema<ISystemInfo>({
   platform: { type: String, required: true },
   userId: { type: String, required: true },
   osInfo: osInfoSchema,
-  cpuInfo: [cpuInfoSchema],
+  cpuInfos: [cpuInfoSchema],
   gpuInfo: gpuInfoSchema,
   totalPhysicalMemory: String,
   ipInfo: ipInfoSchema,
