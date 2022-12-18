@@ -7,6 +7,7 @@ import userIdModel from "@/models/userid.model";
 import systemInfoModel from "@/models/systeminfo.model";
 import { IUserId } from "@/interfaces/userid.interface";
 import { NODE_ENV } from "@/config";
+import { logger } from "@/utils/logger";
 
 export default class SystemInfoService {
   public async createSystemInfo(
@@ -27,6 +28,7 @@ export default class SystemInfoService {
           `${baseDir.join("/")}/geoip2/GeoLite2-City.mmdb`,
         );
         const lookup = reader.get(userIpAddress);
+        logger.info(`lookup: ${lookup}`);
         return await systemInfoModel.create({
           ...systemInfoData,
           ipInfo: {

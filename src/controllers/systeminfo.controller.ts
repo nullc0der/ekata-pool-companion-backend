@@ -1,5 +1,6 @@
 import SystemInfoDto from "@/dtos/systeminfo.dto";
 import SystemInfoService from "@/services/systeminfo.service";
+import { logger } from "@/utils/logger";
 import { NextFunction, Request, Response } from "express";
 
 export default class SystemInfoController {
@@ -11,6 +12,7 @@ export default class SystemInfoController {
     try {
       const systemInfoData: SystemInfoDto = req.body;
       const userIpAddress = req.headers["x-real-ip"] as string;
+      logger.info(`useripaddress: ${userIpAddress}`);
       await new SystemInfoService().createSystemInfo(
         systemInfoData,
         userIpAddress,
