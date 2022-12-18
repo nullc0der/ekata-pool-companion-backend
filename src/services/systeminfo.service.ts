@@ -33,8 +33,8 @@ export default class SystemInfoService {
           return await systemInfoModel.create({
             ...systemInfoData,
             ipInfo: {
-              city: lookup.city.names.en,
-              country: lookup.country.names.en,
+              city: lookup.city?.names.en,
+              country: lookup.country?.names.en,
             },
           });
         }
