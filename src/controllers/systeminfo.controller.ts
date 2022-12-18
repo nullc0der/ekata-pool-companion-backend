@@ -10,7 +10,11 @@ export default class SystemInfoController {
   ) {
     try {
       const systemInfoData: SystemInfoDto = req.body;
-      await new SystemInfoService().createSystemInfo(systemInfoData);
+      const userIpAddress = req.headers["x-real-ip"] as string;
+      await new SystemInfoService().createSystemInfo(
+        systemInfoData,
+        userIpAddress,
+      );
       return res.status(201).json({ message: "created" });
     } catch (error) {
       next(error);

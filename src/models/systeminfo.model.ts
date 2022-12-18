@@ -3,6 +3,7 @@ import {
   IOsInfo,
   ICpuInfo,
   IGpuInfo,
+  IIpInfo,
 } from "@/interfaces/systeminfo.interface";
 import { model, Schema } from "mongoose";
 
@@ -24,6 +25,11 @@ const gpuInfoSchema = new Schema<IGpuInfo>({
   name: String,
 });
 
+const ipInfoSchema = new Schema<IIpInfo>({
+  city: String,
+  country: String,
+});
+
 const systemInfoSchema = new Schema<ISystemInfo>({
   platform: { type: String, required: true },
   userId: { type: String, required: true },
@@ -31,6 +37,7 @@ const systemInfoSchema = new Schema<ISystemInfo>({
   cpuInfo: [cpuInfoSchema],
   gpuInfo: gpuInfoSchema,
   totalPhysicalMemory: String,
+  ipInfo: ipInfoSchema,
 });
 
 export default model<ISystemInfo>("SystemInfo", systemInfoSchema);

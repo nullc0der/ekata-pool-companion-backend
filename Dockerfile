@@ -6,4 +6,5 @@ COPY package-lock.json /app
 RUN npm install
 COPY . /app
 ENV NODE_ENV production
+RUN npm run preload:geolite2
 CMD ["npm", "run", "deploy:prod"]

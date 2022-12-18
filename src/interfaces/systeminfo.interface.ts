@@ -16,6 +16,11 @@ export interface IGpuInfo {
   name?: string;
 }
 
+export interface IIpInfo {
+  city?: string;
+  country?: string;
+}
+
 export interface ISystemInfo {
   platform: string;
   userId: string;
@@ -23,4 +28,5 @@ export interface ISystemInfo {
   cpuInfo?: ICpuInfo[];
   gpuInfo?: IGpuInfo;
   totalPhysicalMemory?: string;
+  ipInfo?: IIpInfo;
 }
