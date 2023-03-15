@@ -13,4 +13,6 @@ export const {
   LOG_DIR,
   ORIGIN,
   SENTRY_DSN,
+  INTERNAL_API_KEY,
+  SITE_URL,
 } = process.env;
