@@ -23,23 +23,25 @@ const validationMiddleware = (
       forbidNonWhitelisted,
     }).then((errors: ValidationError[]) => {
       if (errors.length > 0) {
-        const message = errors
-          .map((error: ValidationError) => {
-            const errorStrings = [];
-            if (error.constraints) {
-              errorStrings.push(Object.values(error.constraints));
-            }
-            if (error.children?.length) {
-              errorStrings.push(
-                error.children.map((error: ValidationError) =>
-                  Object.values(error.constraints),
-                ),
-              );
-            }
-            return errorStrings;
-          })
-          .join(", ");
-        next(new HttpException(400, message));
+        // TODO: Need work on validation error, nested, nested should work properly
+        // const message = errors
+        //   .map((error: ValidationError) => {
+        //     const errorStrings = [];
+        //     if (error.constraints) {
+        //       errorStrings.push(Object.values(error.constraints));
+        //     }
+        //     if (error.children?.length) {
+        //       errorStrings.push(
+        //         error.children.map((error: ValidationError) =>
+        //           Object.values(error.constraints),
+        //         ),
+        //       );
+        //     }
+        //     return errorStrings;
+        //   })
+        //   .join(", ");
+        // next(new HttpException(400, message));
+        res.status(400).json({ errors });
       } else {
         next();
       }

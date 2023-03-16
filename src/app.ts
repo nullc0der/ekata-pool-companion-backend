@@ -20,6 +20,7 @@ import { dbConnection } from "@databases";
 import { Routes } from "@interfaces/routes.interface";
 import errorMiddleware from "@middlewares/error.middleware";
 import { logger, stream } from "@utils/logger";
+import schemaErrorMiddleware from "./middlewares/schemaerror.middleware";
 
 class App {
   public app: express.Application;
@@ -91,6 +92,7 @@ class App {
         Sentry.Handlers.errorHandler() as express.ErrorRequestHandler,
       );
     }
+    this.app.use(schemaErrorMiddleware);
     this.app.use(errorMiddleware);
   }
 }

@@ -1,13 +1,12 @@
 // TODO: Bring userId validation here
 
 import { INTERNAL_API_KEY } from "@/config";
-import { HttpException } from "@/exceptions/HttpException";
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { isEmpty } from "lodash";
 
 const authMiddleware =
   (authType: "apiKey" | "userId"): RequestHandler =>
-  (req: Request, _: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction) => {
     const errorMessages = {};
     if (authType === "apiKey") {
       const apiKey = req.headers["x-api-key"];
@@ -17,7 +16,7 @@ const authMiddleware =
         errorMessages["apiKey"] = "Invalid API key";
     }
     if (!isEmpty(errorMessages)) {
-      next(new HttpException(400, JSON.stringify(errorMessages)));
+      res.status(400).json({ error: errorMessages });
     } else {
       next();
     }
