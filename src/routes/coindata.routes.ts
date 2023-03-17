@@ -1,7 +1,11 @@
 import CoinDataController from "@/controllers/coindata.controller";
 import { Routes } from "@/interfaces/routes.interface";
 import authMiddleware from "@/middlewares/auth.middleware";
-import coinDataSchema, { coinDataGetSchema } from "@/schemas/coindata.schema";
+import {
+  coinDataSchema,
+  coinDataGetSchema,
+  coinDataUpdateSchema,
+} from "@/schemas/coindata.schema";
 import { Router } from "express";
 import { Validator } from "express-json-validator-middleware";
 import addFormats from "ajv-formats";
@@ -33,7 +37,7 @@ export default class CoinDataRoute implements Routes {
     this.router.put(
       `${this.path}/:id`,
       authMiddleware("apiKey"),
-      this.schemaValidator.validate({ body: coinDataSchema }),
+      this.schemaValidator.validate({ body: coinDataUpdateSchema }),
       this.coinDataController.updateCoinData,
     );
     this.router.delete(
