@@ -78,6 +78,9 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
+    if (NODE_ENV === "development") {
+      this.app.use("/media", express.static("media"));
+    }
   }
 
   private initializeRoutes(routes: Routes[]) {

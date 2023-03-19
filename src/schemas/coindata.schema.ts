@@ -21,6 +21,9 @@ export const coinDataGetSchema: AllowedSchema = {
     newestFirst: {
       type: "string",
     },
+    searchQuery: {
+      type: "string",
+    },
   },
   required: ["pageNumber", "perPage", "alphaSort", "newestFirst"],
 };

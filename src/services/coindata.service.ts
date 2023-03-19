@@ -17,9 +17,19 @@ export default class CoinDataService {
     perPage: number,
     alphaSort: string,
     newestFirst: boolean,
+    searchQuery: string,
   ): Promise<ICoinData[]> {
+    const queries = {
+      supportedMiningEngines: "xmrig",
+    };
+    if (searchQuery && searchQuery.length) {
+      queries["coinName"] = {
+        $regex: searchQuery,
+        $options: "i",
+      };
+    }
     return await coindataModel
-      .find({})
+      .find(queries)
       .skip(perPage * pageNumber)
       .limit(perPage)
       .collation({ locale: "en" })
@@ -34,7 +44,6 @@ export default class CoinDataService {
     return await coindataModel.create(coinData);
   }
 
-  // TODO: Check if partial and full both document updates or not
   public async updateCoinData(
     coinDataId: string,
     coinData: object,
