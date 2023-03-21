@@ -18,23 +18,31 @@ export default class CoinDataService {
     alphaSort: string,
     newestFirst: boolean,
     searchQuery: string,
+    cpuMineable: boolean,
   ): Promise<ICoinData[]> {
     const queries = {
       supportedMiningEngines: "xmrig",
     };
-    if (searchQuery && searchQuery.length) {
+    if (!!searchQuery) {
       queries["coinName"] = {
         $regex: searchQuery,
         $options: "i",
       };
     }
+    if (cpuMineable) {
+      queries["cpuMineable"] = true;
+    }
+    // TODO: Alphasort and newestfirst both doesn't
+    // work simultaneously
     return await coindataModel
       .find(queries)
       .skip(perPage * pageNumber)
       .limit(perPage)
-      .collation({ locale: "en" })
-      .sort({ _id: newestFirst ? -1 : 1 })
-      .sort({ coinName: alphaSort === "asc" ? -1 : 1 });
+      .collation({ locale: "en", caseLevel: true })
+      .sort({
+        coinName: alphaSort === "asc" ? 1 : -1,
+        _id: newestFirst ? -1 : 1,
+      });
   }
 
   public async createCoinData(coinData: object): Promise<ICoinData> {

@@ -10,14 +10,21 @@ export default class CoinDataController {
     next: NextFunction,
   ) => {
     try {
-      const { pageNumber, perPage, alphaSort, newestFirst, searchQuery } =
-        req.query;
+      const {
+        pageNumber,
+        perPage,
+        alphaSort,
+        newestFirst,
+        searchQuery,
+        cpuMineable,
+      } = req.query;
       const coinDatas = await this.coinDataService.getCoinDatas(
         parseInt(pageNumber as string),
         parseInt(perPage as string),
         alphaSort as string,
         newestFirst === "true",
         searchQuery as string,
+        cpuMineable === "true",
       );
       return res.status(200).json({ results: coinDatas });
     } catch (error) {

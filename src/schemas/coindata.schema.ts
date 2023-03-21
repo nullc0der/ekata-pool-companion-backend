@@ -24,8 +24,17 @@ export const coinDataGetSchema: AllowedSchema = {
     searchQuery: {
       type: "string",
     },
+    cpuMineable: {
+      type: "string",
+    },
   },
-  required: ["pageNumber", "perPage", "alphaSort", "newestFirst"],
+  required: [
+    "pageNumber",
+    "perPage",
+    "alphaSort",
+    "newestFirst",
+    "cpuMineable",
+  ],
 };
 
 export const coinDataSchema: AllowedSchema = {
