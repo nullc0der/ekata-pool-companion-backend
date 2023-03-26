@@ -5,6 +5,8 @@ import {
   coinDataSchema,
   coinDataGetSchema,
   coinDataUpdateSchema,
+  poolSchema,
+  poolAddSchema,
 } from "@/schemas/coindata.schema";
 import { Router } from "express";
 import { Validator } from "express-json-validator-middleware";
@@ -44,6 +46,23 @@ export default class CoinDataRoute implements Routes {
       `${this.path}/:id`,
       authMiddleware("apiKey"),
       this.coinDataController.deleteCoinData,
+    );
+    this.router.put(
+      `${this.path}/pool/:coinDataId`,
+      authMiddleware("apiKey"),
+      this.schemaValidator.validate({ body: poolAddSchema }),
+      this.coinDataController.addPoolData,
+    );
+    this.router.patch(
+      `${this.path}/pool/:coinDataId/:poolDataId`,
+      authMiddleware("apiKey"),
+      this.schemaValidator.validate({ body: poolSchema }),
+      this.coinDataController.updatePoolData,
+    );
+    this.router.delete(
+      `${this.path}/pool/:coinDataId/:poolDataId`,
+      authMiddleware("apiKey"),
+      this.coinDataController.deletePoolData,
     );
   }
 }

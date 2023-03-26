@@ -91,4 +91,53 @@ export default class CoinDataController {
       next(error);
     }
   };
+
+  public addPoolData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { coinDataId } = req.params;
+      const poolDataUpdated = await this.coinDataService.addPoolData(
+        coinDataId,
+        req.body,
+      );
+      return res.status(200).json(poolDataUpdated);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public updatePoolData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { coinDataId, poolDataId } = req.params;
+      const poolDataUpdated = await this.coinDataService.updatePoolData(
+        coinDataId,
+        poolDataId,
+        req.body,
+      );
+      return res.status(200).json(poolDataUpdated);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public deletePoolData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { coinDataId, poolDataId } = req.params;
+      await this.coinDataService.deletePoolData(coinDataId, poolDataId);
+      return res.status(200).json();
+    } catch (error) {
+      next(error);
+    }
+  };
 }

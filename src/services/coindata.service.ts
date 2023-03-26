@@ -1,5 +1,5 @@
 import { HttpException } from "@/exceptions/HttpException";
-import { ICoinData } from "@/interfaces/coindata.interface";
+import { ICoinData, IPool } from "@/interfaces/coindata.interface";
 import coindataModel from "@/models/coindata.model";
 import { isEmpty } from "lodash";
 
@@ -49,6 +49,14 @@ export default class CoinDataService {
     if (isEmpty(coinData)) {
       throw new HttpException(400, "CoinData is empty");
     }
+    const coinDataDb: ICoinData = await coindataModel.findOne({
+      coinName: coinData["coinName"],
+    });
+    if (!isEmpty(coinDataDb))
+      throw new HttpException(
+        400,
+        `coinData for ${coinData["coinName"]} exist`,
+      );
     return await coindataModel.create(coinData);
   }
 
@@ -80,5 +88,67 @@ export default class CoinDataService {
       return true;
     }
     return false;
+  }
+
+  public async addPoolData(
+    coinDataId: string,
+    pools: IPool[],
+  ): Promise<IPool[]> {
+    const coinData = await coindataModel.findOne({
+      _id: coinDataId,
+    });
+    if (isEmpty(coinData)) {
+      throw new HttpException(404, "CoinData not found");
+    }
+    coinData.pools.push(...pools);
+    await coinData.save();
+    return coinData.pools;
+  }
+
+  public async updatePoolData(
+    coinDataId: string,
+    poolDataId: string,
+    poolData: IPool,
+  ): Promise<IPool[]> {
+    const coinData = await coindataModel.findOne({
+      _id: coinDataId,
+    });
+    if (isEmpty(coinData)) {
+      throw new HttpException(404, "CoinData not found");
+    }
+    const poolsInDb = coinData.pools.filter(
+      (pool) => pool._id.toString() === poolDataId,
+    );
+    if (isEmpty(poolsInDb)) {
+      throw new HttpException(404, "pool not found");
+    }
+    coinData.pools = coinData.pools.map((pool) =>
+      pool._id.toString() === poolDataId ? { ...pool, ...poolData } : pool,
+    );
+    await coinData.save();
+    return coinData.pools;
+  }
+
+  public async deletePoolData(
+    coinDataId: string,
+    poolDataId: string,
+  ): Promise<boolean> {
+    const coinData = await coindataModel.findOne({
+      _id: coinDataId,
+    });
+    if (isEmpty(coinData)) {
+      throw new HttpException(404, "CoinData not found");
+    }
+    const pools = coinData.pools.filter(
+      (pool) => pool._id.toString() === poolDataId,
+    );
+    if (isEmpty(pools)) {
+      throw new HttpException(404, "pool not found");
+    }
+    coinData.pools = coinData.pools.filter(
+      (pool) => pool._id.toString() !== poolDataId,
+    );
+    await coinData.save();
+    return true;
   }
 }

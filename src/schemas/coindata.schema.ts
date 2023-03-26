@@ -198,6 +198,100 @@ export const coinDataUpdateSchema: AllowedSchema = {
               ],
             },
           },
+          required: ["poolName", "region", "urls", "ports"],
+        },
+      ],
+    },
+  },
+};
+
+export const poolAddSchema: AllowedSchema = {
+  type: "array",
+  minItems: 1,
+  items: [
+    {
+      type: "object",
+      properties: {
+        poolName: {
+          minLength: 1,
+          type: "string",
+        },
+        region: {
+          type: "string",
+          enum: REGIONS,
+        },
+        urls: {
+          type: "array",
+          minItems: 1,
+          items: {
+            anyOf: [
+              {
+                type: "string",
+                format: "hostname",
+              },
+              {
+                type: "string",
+                format: "ipv4",
+              },
+              {
+                type: "string",
+                format: "ipv6",
+              },
+            ],
+          },
+        },
+        ports: {
+          type: "array",
+          minItems: 1,
+          items: [
+            {
+              type: "integer",
+            },
+          ],
+        },
+      },
+      required: ["poolName", "region", "urls", "ports"],
+    },
+  ],
+};
+
+export const poolSchema: AllowedSchema = {
+  type: "object",
+  properties: {
+    poolName: {
+      minLength: 1,
+      type: "string",
+    },
+    region: {
+      type: "string",
+      enum: REGIONS,
+    },
+    urls: {
+      type: "array",
+      minItems: 1,
+      items: {
+        anyOf: [
+          {
+            type: "string",
+            format: "hostname",
+          },
+          {
+            type: "string",
+            format: "ipv4",
+          },
+          {
+            type: "string",
+            format: "ipv6",
+          },
+        ],
+      },
+    },
+    ports: {
+      type: "array",
+      minItems: 1,
+      items: [
+        {
+          type: "integer",
         },
       ],
     },

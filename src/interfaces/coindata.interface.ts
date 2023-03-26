@@ -1,4 +1,5 @@
 export interface IPool {
+  _id: string;
   poolName: string;
   region: string;
   urls: string[];
