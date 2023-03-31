@@ -2,7 +2,7 @@
 
 ### CoinLogo
 
-All endpoint except get need X-API-KEY header
+All endpoint need X-API-KEY header
 
 #### Get coinlogos
 
@@ -23,6 +23,12 @@ All endpoint except get need X-API-KEY header
 ]
 ```
 
+**Example**
+
+```bash
+curl --request GET --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "X-API-KEY: <API_KEY_HERE>" https://poolcompanion.ekata.io/api/v1/coinlogo
+```
+
 #### Get coinlogo
 
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coinlogo/<logoId>`
@@ -40,13 +46,19 @@ All endpoint except get need X-API-KEY header
 }
 ```
 
+**Example**
+
+```bash
+curl --request GET --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "X-API-KEY: <API_KEY_HERE>" https://poolcompanion.ekata.io/api/v1/coinlogo/<logoId>
+```
+
 #### Create coinlogo
 
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coinlogo`
 
 **Method:** `POST`
 
-This needs to be multipart/form-data request
+This needs to be a multipart/form-data request
 
 ##### Request
 
@@ -68,6 +80,12 @@ This needs to be multipart/form-data request
 }
 ```
 
+**Example**
+
+```bash
+curl --request POST --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "X-API-KEY: <API_KEY_HERE>" --form "coinName=<coinName>" --form "coinLogo=@<path/to/logo>" https://poolcompanion.ekata.io/api/v1/coinlogo
+```
+
 #### Delete coinlogo
 
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coinlogo/<logoId>`
@@ -82,11 +100,17 @@ This needs to be multipart/form-data request
 }
 ```
 
+**Example**
+
+```bash
+curl --request DELETE --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "X-API-KEY: <API_KEY_HERE>" https://poolcompanion.ekata.io/api/v1/coinlogo/<logoId>
+```
+
 ### CoinData
 
 All endpoint except get need X-API-KEY header
 
-It also needs "Content-Type": "application/json" header
+It also needs "Content-Type: application/json" header
 
 #### Get coindatas
 
@@ -130,6 +154,12 @@ Every params are required
   ]
 ```
 
+**Example**
+
+```bash
+curl --request GET --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" https://poolcompanion.ekata.io/api/v1/coindata/\?pageNumber\=0\&perPage\=10\&alphaSort\=asc\&newestFirst\=true\&cpuMineable\=false
+```
+
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coindata/<coinDataID>`
 
 **Method:** `GET`
@@ -154,6 +184,12 @@ Every params are required
       }
     ]
   }
+```
+
+**Example**
+
+```bash
+curl --request GET --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" https://poolcompanion.ekata.io/api/v1/coindata/<coinDataId>
 ```
 
 #### Create coindata
@@ -206,6 +242,14 @@ Every properties are required
     }
 ```
 
+// TODO: test and review all
+
+**Example**
+
+```bash
+curl --request POST --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "Content-Type: application/json" --header "X-API-KEY: <API_KEY_HERE>" --data @/path/to/coindata.json https://poolcompanion.ekata.io/api/v1/coindata
+```
+
 #### Update coindata
 
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coindata/<coinDataId>`
@@ -256,6 +300,12 @@ Every top level properties are optional, but adding data to pools will replace o
     }
 ```
 
+**Example**
+
+```bash
+curl --request PUT --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "Content-Type: application/json" --header "X-API-KEY: <API_KEY_HERE>" --data '{"coinName": "baza"}' https://poolcompanion.ekata.io/api/v1/coindata/<coinDataId>
+```
+
 #### Delete coindata
 
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coindata/<coinDataId>`
@@ -268,6 +318,12 @@ Every top level properties are optional, but adding data to pools will replace o
   {
     "deleted": boolean
   }
+```
+
+**Example**
+
+```bash
+curl --request DELETE --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "Content-Type: application/json" --header "X-API-KEY: <API_KEY_HERE>" https://poolcompanion.ekata.io/api/v1/coindata/<coinDataId>
 ```
 
 #### Add pool to coindata
@@ -307,6 +363,12 @@ All pools in the coindata
   ]
 ```
 
+**Example**
+
+```bash
+curl --request PUT --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "Content-Type: application/json" --header "X-API-KEY: <API_KEY_HERE>" --data=@/path/to/pooldata.json https://poolcompanion.ekata.io/api/v1/coindata/pool/<coinDataId>
+```
+
 #### Update a pool of a coindata
 
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coindata/pool/<coinDataId>/<poolDataId>`
@@ -342,6 +404,12 @@ All pools in the coindata
   ]
 ```
 
+**Example**
+
+```bash
+curl --request PATCH --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "Content-Type: application/json" --header "X-API-KEY: <API_KEY_HERE>" --data='{"poolName": "Baza Official"}' https://poolcompanion.ekata.io/api/v1/coindata/pool/<coinDataId>/<poolDataId>
+```
+
 #### Delete pool in a coindata
 
 **Endpoint:** `https://poolcompanion.ekata.io/api/v1/coindata/pool/<coinDataId>/<poolDataId>`
@@ -349,3 +417,9 @@ All pools in the coindata
 **Method:** `DELETE`
 
 On success it will send 200 OK response
+
+**Example**
+
+```bash
+curl --request DELETE --header "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" --header "Content-Type: application/json" --header "X-API-KEY: <API_KEY_HERE>" https://poolcompanion.ekata.io/api/v1/coindata/pool/<coinDataId>/<poolDataId>
+```
