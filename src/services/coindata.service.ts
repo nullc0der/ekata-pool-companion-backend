@@ -20,9 +20,7 @@ export default class CoinDataService {
     searchQuery: string,
     cpuMineable: boolean,
   ): Promise<ICoinData[]> {
-    const queries = {
-      supportedMiningEngines: "xmrig",
-    };
+    const queries = {};
     if (!!searchQuery) {
       queries["coinName"] = {
         $regex: searchQuery,
