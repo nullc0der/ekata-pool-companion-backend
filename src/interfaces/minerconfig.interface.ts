@@ -3,4 +3,5 @@ export interface IMinerConfig {
   userUploaded: boolean;
   minerConfig: object;
   minerConfigMd5: string;
+  minerBinary?: string;
 }

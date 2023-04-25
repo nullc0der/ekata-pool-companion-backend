@@ -31,6 +31,7 @@ export default class MinerConfigService {
       userId: minerConfigData.userId,
       minerConfig: minerConfigJSON,
       userUploaded: minerConfigData.userUploaded,
+      minerBinary: minerConfigData.minerBinary,
       minerConfigMd5,
     });
     if (!minerConfig) {
@@ -38,6 +39,7 @@ export default class MinerConfigService {
         userId: minerConfigData.userId,
         minerConfig: minerConfigJSON,
         userUploaded: minerConfigData.userUploaded,
+        minerBinary: minerConfigData.minerBinary,
         minerConfigMd5,
       });
     } else {
@@ -122,6 +124,7 @@ export default class MinerConfigService {
       minerConfig: x.minerConfig,
       timeStamp: x._id.getTimestamp().getTime(),
       minerConfigMd5: x.minerConfigMd5,
+      minerBinary: x.minerBinary,
     }));
   }
 }

@@ -7,6 +7,7 @@ const minerConfigSchema: Schema = new Schema({
   userUploaded: { type: Boolean, required: true },
   minerConfig: { type: Object, required: true },
   minerConfigMd5: { type: String, required: true },
+  minerBinary: { type: String, required: false },
 });
 
 minerConfigSchema.index({

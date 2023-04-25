@@ -52,4 +52,8 @@ export default class MinerConfigDto {
 
   @IsJSON()
   public minerConfig: string;
+
+  @IsOptional()
+  @IsString()
+  public minerBinary?: string;
 }
