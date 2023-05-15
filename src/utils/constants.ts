@@ -246,4 +246,5 @@ export const REGIONS = [
   "YE",
   "ZM",
   "ZW",
+  "WW",
 ];
